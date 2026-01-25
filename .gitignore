@@ -1,2 +1,6 @@
 # Python virtual environment
 venv/
+odoo/
+__pycache__/
+*.pyc
+odoo.conf
