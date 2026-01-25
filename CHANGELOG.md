@@ -45,4 +45,61 @@ All notable changes to this project are documented in this file.
 - Created `custom_addons/` directory for custom development.
 - Scaffolded custom module: **purchase_request**
 - Implemented module structure:
+custom_addons/purchase_request/
+├── init.py
+├── manifest.py
+├── models/
+│ ├── init.py
+│ ├── purchase_request.py
+│ └── purchase_request_line.py
+├── views/
+├── security/
+└── data/
+
+- Defined core business models:
+- `purchase.request`
+- `purchase.request.line`
+- Implemented One-to-Many relationship:
+- One Purchase Request → Multiple Request Lines
+- Linked request lines to existing Odoo models:
+- `product.product`
+- `uom.uom`
+- Declared dependency on the core `purchase` module in manifest.
+
+
+
+## Day 5 – UI Enablement & Odoo 18 Compatibility
+- Purchase Request user interface under the Purchase module
+- List and Form views for `purchase.request`
+- Menu item and window action for Purchase Requests
+- Editable request lines embedded in the form view
+- Access control rules for custom models
+
+### Changed
+- Updated view definitions to comply with **Odoo 18 view architecture**
+  - Replaced deprecated `tree` view type with `list`
+- Configured action window to support multiple view modes (`list,form`)
+- Confirmed correct module metadata and dependencies in `__manifest__.py`
+
+### Fixed
+- Resolved `FileNotFoundError` caused by incorrect `addons_path` configuration
+- Fixed XML `ParseError` due to invalid root view type (`tree`)
+- Fixed frontend `UncaughtPromiseError` by aligning action view modes with available views
+- Addressed server conflicts caused by running multiple Odoo instances simultaneously
+
+### Verified
+- Module installs successfully from Apps
+- List view opens correctly under Purchases → Purchase Requests
+- Form view loads and supports line item creation
+- No registry, ORM, or JS errors after upgrade
+- Odoo server restarts cleanly after changes
+
+### Outcome
+- Purchase Request feature is now visible and usable in the UI
+- Stable foundation established for:
+  - Workflow states
+  - RFQ generation
+  - Multi-vendor bidding logic
+
+
 
