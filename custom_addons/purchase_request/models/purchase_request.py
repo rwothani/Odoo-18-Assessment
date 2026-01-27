@@ -28,3 +28,9 @@ class PurchaseRequest(models.Model):
         "request_id",
         string="Request Lines",
     )
+    bid_ids = fields.One2many(
+        "purchase.request.bid",
+        "request_id",
+        string="Vendor Bids",
+    )
+    

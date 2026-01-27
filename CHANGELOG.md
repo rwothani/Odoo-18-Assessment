@@ -102,4 +102,23 @@ custom_addons/purchase_request/
   - Multi-vendor bidding logic
 
 
+## Day 6 – Vendor Bid Integration & View Wiring
+- Vendor Bid model (`purchase.request.bid`) to support multi-vendor quotations
+- One2many relationship between Purchase Request and Vendor Bids
+- Vendor Bid list view embedded inside Purchase Request form (Notebook tab)
+- Bid workflow fields: state, winning flag, delivery lead time
+
+### Fixed
+- Resolved `IndentationError` caused by improperly indented method definition
+- Fixed XML `ParseError` where `<page>` elements were not nested under `<notebook>`
+- Addressed `UncaughtPromiseError` by ensuring all referenced view types exist
+- Corrected relationship wiring to prevent orphan bid records
+
+### Verified
+- Module upgrades successfully without registry errors
+- Purchase Requests load with embedded Vendor Bids tab
+- Vendor bids can be added and viewed per request
+- Access rules applied correctly for internal users
+- No server or frontend errors after upgrade
+
 

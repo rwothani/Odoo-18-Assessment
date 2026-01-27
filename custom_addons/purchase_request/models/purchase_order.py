@@ -8,8 +8,8 @@ class PurchaseOrder(models.Model):
         "purchase.request",
         string="Purchase Request",
     )
-    bid_ids = fields.One2many(
-        "purchase.bid",
-        "rfq_id",
-        string="Vendor Bids",
-    )
+    # bid_ids = fields.One2many(
+    #     "purchase.bid",
+    #     #"rfq_id",
+    #     string="Vendor Bids",
+    # )
