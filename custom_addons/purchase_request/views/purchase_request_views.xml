@@ -6,10 +6,10 @@
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
             <list>
-                <field name="name" />
-                <field name="requested_by" />
-                <field name="date_request" />
-                <field name="state" />
+                <field name="name"/>
+                <field name="requested_by"/>
+                <field name="date_request"/>
+                <field name="state"/>
             </list>
         </field>
     </record>
@@ -20,39 +20,40 @@
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
             <form string="Purchase Request">
+
+                <!-- HEADER BUTTONS -->
+                <header>
+                    <button name="action_request_rfq"
+                            type="object"
+                            string="Request RFQs"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <button name="action_view_bids"
+                            type="object"
+                            string="View Vendor Bids"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+
                 <sheet>
                     <group>
-                        <field name="name" />
-                        <field name="requested_by" />
-                        <field name="date_request" />
-                        <field name="state" />
+                        <field name="name"/>
+                        <field name="requested_by"/>
+                        <field name="date_request"/>
                     </group>
 
                     <notebook>
                         <page string="Request Lines">
                             <field name="line_ids">
                                 <list editable="bottom">
-                                    <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
-                                </list>
-                            </field>
-                        </page>
-
-                        <page string="Vendor Bids">
-                            <field name="bid_ids">
-                                <list editable="bottom">
-                                    <field name="vendor_id" />
-                                    <field name="price_total" />
-                                    <field name="delivery_days" />
-                                    <field name="state" />
-                                    <field name="is_winner" />
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
                                 </list>
                             </field>
                         </page>
                     </notebook>
-
-                    
                 </sheet>
 
             </form>
