@@ -1,0 +1,58 @@
+<odoo>
+
+    <record id="view_rfq_bid_tree" model="ir.ui.view">
+        <field name="name">purchase.rfq.bid.tree</field>
+        <field name="model">purchase.rfq.bid</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="rfq_id"/>
+                <field name="vendor_id"/>
+                <field name="price_total"/>
+                <field name="delivery_days"/>
+                <field name="state"/>
+                <field name="is_winner"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_rfq_bid_form" model="ir.ui.view">
+        <field name="name">purchase.rfq.bid.form</field>
+        <field name="model">purchase.rfq.bid</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit Bid" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_accept" type="object" string="Accept as Winner" class="oe_highlight"
+                            invisible="state != 'submitted'"/>
+                            
+                    <button name="action_create_po" type="object" string="Create Purchase Order"
+                            invisible="is_winner == False"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="rfq_id" readonly="1"/>
+                        <field name="vendor_id" options="{'no_create': True}"/>
+                        <field name="price_total"/>
+                        <field name="delivery_days"/>
+                        <field name="is_winner" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Optional: action to open all bids (can be linked from menu or RFQ) -->
+    <record id="action_rfq_bid_all" model="ir.actions.act_window">
+        <field name="name">All Vendor Bids</field>
+        <field name="res_model">purchase.rfq.bid</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No bids yet.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,4 +1,4 @@
+from . import purchase_order
 from . import purchase_request
 from . import purchase_request_line
-from . import purchase_request_bid
-from . import purchase_order
+from . import rfq_bid

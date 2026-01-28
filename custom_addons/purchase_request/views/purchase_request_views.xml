@@ -1,8 +1,7 @@
 <odoo>
 
-    <!-- List View -->
-    <record id="view_purchase_request_list" model="ir.ui.view">
-        <field name="name">purchase.request.list</field>
+    <record id="view_purchase_request_tree" model="ir.ui.view">
+        <field name="name">purchase.request.tree</field>
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
             <list>
@@ -14,25 +13,17 @@
         </field>
     </record>
 
-    <!-- Form View -->
     <record id="view_purchase_request_form" model="ir.ui.view">
         <field name="name">purchase.request.form</field>
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
             <form string="Purchase Request">
-
-                <!-- HEADER BUTTONS -->
                 <header>
-                    <button name="action_request_rfq"
+                    <button name="action_create_rfq" 
                             type="object"
-                            string="Request RFQs"
-                            class="btn-primary"
+                            string="Create RFQ" 
+                            class="oe_highlight"
                             invisible="state != 'draft'"/>
-
-                    <button name="action_view_bids"
-                            type="object"
-                            string="View Vendor Bids"/>
-
                     <field name="state" widget="statusbar"/>
                 </header>
 
@@ -44,7 +35,7 @@
                     </group>
 
                     <notebook>
-                        <page string="Request Lines">
+                        <page string="Products">
                             <field name="line_ids">
                                 <list editable="bottom">
                                     <field name="product_id"/>
@@ -53,9 +44,13 @@
                                 </list>
                             </field>
                         </page>
+
+                        <page string="Generated RFQs" 
+                              invisible="not rfq_ids">
+                            <field name="rfq_ids" widget="many2many_tags"/>
+                        </page>
                     </notebook>
                 </sheet>
-
             </form>
         </field>
     </record>

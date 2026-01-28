@@ -122,3 +122,30 @@ custom_addons/purchase_request/
 - No server or frontend errors after upgrade
 
 
+### Day 7 and Day 8
+### Fixed
+- Fixed `SyntaxError: 'return' outside function` in `purchase_request.py` by correcting indentation of `return` action dictionary inside `action_create_rfq` method (2026-01-29)
+- Resolved persistent `mandatory field partner_id not set` validation error on RFQ creation  
+  → Overrode `partner_id` to `required=False` in `purchase.order` inheritance when created from purchase request  
+  → Removed obsolete dummy vendor logic and NameError trace from leftover `dummy_vendor.id` reference  
+  (files: `purchase_order.py`, `purchase_request.py`) (2026-01-29)
+- Fixed `ValidationError` on placeholder bid creation: added `default=14` to `delivery_days` in `purchase.rfq.bid` model  
+  (file: `rfq_bid.py`) (2026-01-29)
+
+### Changed
+- Simplified RFQ creation logic: removed dummy vendor search/write operations after making `partner_id` optional (2026-01-29)
+- Improved `create_bid_records` method: added count of created bids and clearer error messages (2026-01-29)
+
+### Added
+- Added `@api.constrains` on `purchase.order` to enforce vendor presence before sending/confirming RFQ (safety net) (2026-01-29)
+- Added inverse `rfq_ids` One2many field on `purchase.request` to complete bidirectional relation with `purchase_request_id` (2026-01-29)
+
+## [0.1.0] - 2026-01-28
+### Initial implementation
+- Created core models: purchase.request, purchase.request.line, purchase.rfq.bid
+- Inherited purchase.order with multi-vendor support (vendor_ids Many2many)
+- Implemented basic RFQ creation from purchase request
+- Added bid creation, submission, acceptance, and PO generation from winning bid
+- Created views, menus, and access rights
+
+**Note:** Early versions had multiple debugging iterations around partner_id required constraint, dummy vendor workaround, syntax errors, view parsing issues (attrs → invisible migration), and model relation setup (KeyError on inverse_name).

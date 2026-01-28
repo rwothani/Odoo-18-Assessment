@@ -1,0 +1,72 @@
+<odoo>
+
+    <record id="view_purchase_order_form_inherit_multi_vendor" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.multi.vendor</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Multi-vendor selection (only visible in RFQ/draft/sent states) -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="vendor_ids"
+                       widget="many2many_tags"
+                       placeholder="Select vendors to invite for RFQ"
+                       invisible="state not in ['draft', 'sent']"/>
+
+                <button name="create_bid_records"
+                        type="object"
+                        string="Create Bid Entries"
+                        class="oe_highlight"
+                        invisible="state != 'draft' or bid_ids"/>
+                <!-- ↑ added "or bid_ids" so button disappears after bids are created -->
+            </xpath>
+
+            <!-- Vendor Bids tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Vendor Bids" invisible="not bid_ids">
+                    <!-- Hide tab completely if no bids exist yet -->
+                    <field name="bid_ids">
+                        <list editable="bottom">
+                            <field name="vendor_id"/>
+                            <field name="price_total"/>
+                            <field name="delivery_days"/>
+                            <field name="state"/>
+                            <field name="is_winner"/>
+                        </list>
+
+                        <form>
+                            <header>
+                                <!-- Accept button: only visible when bid is submitted -->
+                                <button name="action_accept"
+                                        string="Accept as Winner"
+                                        type="object"
+                                        class="oe_highlight"
+                                        invisible="state != 'submitted'"/>
+
+                                <!-- Create PO button: only visible when this bid is the winner -->
+                                <button name="action_create_po"
+                                        string="Create Purchase Order"
+                                        type="object"
+                                        class="oe_highlight"
+                                        invisible="not is_winner"/>
+
+                                <field name="state" widget="statusbar"/>
+                            </header>
+
+                            <sheet>
+                                <group>
+                                    <field name="vendor_id" options="{'no_create': True}"/>
+                                    <field name="price_total"/>
+                                    <field name="delivery_days"/>
+                                    <field name="is_winner" readonly="1"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

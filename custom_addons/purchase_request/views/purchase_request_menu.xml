@@ -1,22 +1,34 @@
 <odoo>
 
+    <!-- Action for Purchase Requests (make sure this exists in purchase_request_views.xml) -->
     <record id="action_purchase_request" model="ir.actions.act_window">
         <field name="name">Purchase Requests</field>
         <field name="res_model">purchase.request</field>
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem
-        id="menu_purchase_request_root"
-        name="Purchase Requests"
-        parent="purchase.menu_purchase_root"
-        action="action_purchase_request"
-        sequence="20"
-    />
+    <!-- Action for All Vendor Bids -->
+    <record id="action_rfq_bid_all" model="ir.actions.act_window">
+        <field name="name">All Vendor Bids</field>
+        <field name="res_model">purchase.rfq.bid</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_purchase_request_root"
+              name="Purchase Requests"
+              parent="purchase.menu_purchase_root"
+              sequence="20"/>
 
     <menuitem id="menu_purchase_request"
               name="Requests"
               parent="menu_purchase_request_root"
-              action="action_purchase_request"/>
+              action="purchase_request.action_purchase_request"/>
+
+    <menuitem id="menu_rfq_bids"
+              name="Vendor Bids (RFQs)"
+              parent="purchase.menu_purchase_root"
+              action="purchase_request.action_rfq_bid_all"
+              sequence="25"/>
 
 </odoo>
